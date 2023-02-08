@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "cdnjs",
+      "library": "bootstrap@5.1.1",
+      "destination": "wwwroot/lib/bootstrap/"
+    },
+    {
+      "library": "jquery@3.6.3",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "jquery-validate@1.19.5",
+      "destination": "wwwroot/jquery-validate/"
+    },
+    {
+      "provider": "filesystem",
+      "library": "wwwroot/js/",
+      "destination": "wwwroot/lib/bootstrap/js/",
+      "files": [
+        "bootsrap.js"
+      ]
+    }
+  ]
+}
