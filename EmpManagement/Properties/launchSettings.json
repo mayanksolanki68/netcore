@@ -1,9 +1,10 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:58757"
+      "applicationUrl": "https://localhost:44327/",
+      "sslPort": 44327
     }
   },
   "profiles": {
@@ -11,17 +12,17 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production",
-        "MyKey": "Value of MyKey from environment.json"
+        "MyKey": "Value of MyKey from environment.json",
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     },
     "EmpManagement": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://localhost:5000"
     }
   }
 }

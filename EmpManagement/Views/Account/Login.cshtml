@@ -2,9 +2,11 @@
 @{
     ViewBag.Title = "User Login";
 }
-<h1>User Login</h1>
+
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
+        <hr />
+        <h1>Local Account Login</h1>
         <form method="post" asp-controller="Account" asp-action="login">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -25,7 +27,35 @@
                     </label>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]";>Login</button>
+            <button type="submit" class="btn btn-primary" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" ;>Login</button>
+            <div>
+                <a asp-action="ForgotPassword">Forgot Password?</a>
+            </div>
         </form>
+    </div>
+    <div class="col-md-6">
+        <hr />
+        <h1>External Login</h1>
+        @{
+            if (Model.ExternalLogins.Count == 0)
+            {
+                <div>
+                    No external logins configured
+                </div>
+            }
+            else
+            {
+                <form method="post" asp-action="ExternalLogin" asp-route-retrunUrl="@Model.ReturnUrl">
+                    @foreach (var provider in Model.ExternalLogins)
+                    {
+                        <button type="submit" class="btn btn-primary" style="width:auto;"
+                                name="provider" value="@provider.Name"
+                                title="Login using your @provider.DisplayName account">
+                            @provider.DisplayName
+                        </button>
+                    }
+                </form>
+            }
+        }
     </div>
 </div>

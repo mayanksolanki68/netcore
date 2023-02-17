@@ -89,7 +89,11 @@
                 <h5 class="card-title">None at the moment</h5>
             }
         </div>
+        <div class="card-footer">
+            <a asp-action="ManageUserClaims" asp-route-userId="@Model.Id"
+               style="width:auto" class="btn btn-primary">Manage Claims</a>
+        </div>
 
-        
+
     </div>
 </form>

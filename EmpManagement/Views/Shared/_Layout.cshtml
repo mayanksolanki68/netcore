@@ -50,7 +50,7 @@
                         <a asp-action="Create" asp-controller="Home" class="nav-link">Create</a>
                     </li>
                 </ul>
-                @if (signInManager.IsSignedIn(User) && User.IsInRole("admin"))
+                @if (signInManager.IsSignedIn(User) && (User.IsInRole("admin") || User.IsInRole("Super Admin")))
                 {
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
