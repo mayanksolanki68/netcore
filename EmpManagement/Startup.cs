@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace EmpManagement
 {
@@ -29,14 +30,19 @@ namespace EmpManagement
             services.AddIdentity<ApplicationUser, IdentityRole>(
                 options =>
                 {
-                    options.Password.RequiredLength = 10;
+                    options.Password.RequiredLength = 6;
                     options.Password.RequiredUniqueChars = 3;
                     options.Password.RequireNonAlphanumeric = false;
                     options.SignIn.RequireConfirmedEmail = true;
+                    options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
+                    options.Lockout.MaxFailedAccessAttempts = 5;
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
                 }).
                 AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders();
-
+            .AddDefaultTokenProviders()
+            .AddTokenProvider<CustomEmailConfirmationTokenProvider<ApplicationUser>>("CustomEmailConfirmation");
+            services.Configure<DataProtectionTokenProviderOptions>(x => x.TokenLifespan = TimeSpan.FromMinutes(30));
+            services.Configure<CustomEmailConfirmationTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromDays(3));
             services.AddMvc(options =>
             {
                 var Policy = new AuthorizationPolicyBuilder().
@@ -66,6 +72,7 @@ namespace EmpManagement
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
             services.AddSingleton<IAuthorizationHandler, CanEditOnlyOtherAdminRolesAndClaimHandler>();
             services.AddSingleton<IAuthorizationHandler, SuperAdminHandler>();
+            services.AddSingleton<DataProtectionPurposeStrings>();
         }
 
         //Midddle ware
